@@ -9,6 +9,18 @@ pial is a re-packaging and adaption of sorl-thumbnails image manipulation
 internals. The idea is to make the flexibility of sorl's engines available
 to other projects in a simple, compact form.
 
+Status
+======
+
+pial is currently in a state of flex while we develop and test. Using the
+PILEngine should be pretty safe, but the others are currently in need of work.
+
+Documentation
+=============
+
+Forthcoming. For now, check out the ``tests/pil_tests.py`` for examples of
+how this module works.
+
 Requirements
 ============
 
