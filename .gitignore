@@ -1,0 +1,6 @@
+*.pyc
+*.tmp
+*.swp
+*~
+.idea
+tests/test_images/*_*x*.*
