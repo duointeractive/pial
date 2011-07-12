@@ -6,8 +6,10 @@ try:
 except ImportError:
     import Image, ImageFile, ImageDraw
 
-
 class PILEngine(EngineBase):
+    """
+    Python Imaging Library Engine. This implements members of EngineBase.
+    """
     def get_image(self, source):
         """
         Given a file-like object, loads it up into a PIL.Image object
@@ -48,9 +50,19 @@ class PILEngine(EngineBase):
         return True
 
     def _colorspace(self, image, colorspace):
+        """
+        Sets the image's colorspace. This is typical 'RGB' or 'GRAY', but
+        may be other things, depending on your choice of Engine.
+
+        :param PIL.Image image: The image whose colorspace to adjust.
+        :param str colorspace: One of either 'RGB' or 'GRAY'.
+        :rtype: PIL.Image
+        :returns: The colorspace-adjusted image.
+        """
         if colorspace == 'RGB':
             if image.mode == 'RGBA':
-                return image # RGBA is just RGB + Alpha
+                # RGBA is just RGB + Alpha
+                return image
             if image.mode == 'P' and 'transparency' in image.info:
                 return image.convert('RGBA')
             return image.convert('RGB')
@@ -59,9 +71,30 @@ class PILEngine(EngineBase):
         return image
 
     def _scale(self, image, width, height):
+        """
+        Given an image, scales the image to the given ``width`` and ``height``.
+
+        :param PIL.Image image: The image to scale.
+        :param int width: The width of the scaled image.
+        :param int height: The height of the scaled image.
+        :rtype: PIL.Image
+        :returns: The scaled image. 
+        """
         return image.resize((width, height), resample=Image.ANTIALIAS)
 
     def _crop(self, image, width, height, x_offset, y_offset):
+        """
+        Crops the ``image``, starting at ``width`` and ``height``, adding the
+        ``x_offset`` and ``y_offset`` to make the crop window.
+
+        :param PIL.Image image: The image to crop.
+        :param int width: The X plane's start of the crop window.
+        :param int height: The Y plane's start of the crop window.
+        :param int x_offset: The 'width' of the crop window.
+        :param int y_offset: The 'height' of the crop window.
+        :rtype: PIL.Image
+        :returns: The cropped image.
+        """
         return image.crop((x_offset, y_offset,
                            width + x_offset, height + y_offset))
 

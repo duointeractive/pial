@@ -141,6 +141,7 @@ class EngineBase(object):
         native object and returns it.
 
         :param file source: A file-like object to load the image from.
+        :returns: Your Engine's representation of an Image file.
         """
         raise NotImplemented()
 
@@ -165,32 +166,59 @@ class EngineBase(object):
         """
         raise NotImplemented()
 
-    def _colorspace(self, image, colorspace):
-        """
-        `Valid colorspaces
-        <http://www.graphicsmagick.org/GraphicsMagick.html#details-colorspace>`_.
-        Backends need to implement the following::
-
-            RGB, GRAY
-        """
-        raise NotImplemented()
-
     def _scale(self, image, width, height):
         """
-        Does the resizing of the image
+        Given an image, scales the image to the given ``width`` and ``height``.
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param int width: The width of the scaled image.
+        :param int height: The height of the scaled image.
+        :returns: The scaled image. The returned type depends on your
+            choice of Engine.
         """
         raise NotImplemented()
 
     def _crop(self, image, width, height, x_offset, y_offset):
         """
-        Crops the image
+        Crops the ``image``, starting at ``width`` and ``height``, adding the
+        ``x_offset`` and ``y_offset`` to make the crop window.
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param int width: The X plane's start of the crop window.
+        :param int height: The Y plane's start of the crop window.
+        :param int x_offset: The 'width' of the crop window.
+        :param int y_offset: The 'height' of the crop window.
+        :returns: The cropped image. The returned type depends on your
+            choice of Engine.
         """
         raise NotImplemented()
 
-    def _get_raw_data(self, image, format_, quality):
+    def _get_raw_data(self, image, format, quality):
         """
         Gets raw data given the image, format and quality. This method is
         called from :meth:`write`
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param str format: The format to dump the image in. Typical values
+            are 'JPEG', 'GIF', and 'PNG', but are dependent upon the Engine.
+        :rtype: str
+        :returns: The string representation of the image.
         """
         raise NotImplemented()
 
+    def _colorspace(self, image, colorspace):
+        """
+        Sets the image's colorspace. This is typical 'RGB' or 'GRAY', but
+        may be other things, depending on your choice of Engine.
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param str colorspace: The colorspace to set/convert the image to.
+            This is typically 'RGB' or 'GRAY'.
+        :returns: The colorspace-adjusted image. The returned type depends on
+            your choice of Engine.
+        """
+        raise NotImplemented()
