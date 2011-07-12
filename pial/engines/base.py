@@ -17,7 +17,9 @@ class EngineBase(object):
     def create_thumbnail(self, image, geometry,
                          upscale=True, crop=None, colorspace='RGB'):
         """
-        Processing conductor, returns the thumbnail as an image engine instance
+        This serves as a really basic example of a thumbnailing method. You
+        may want to implement your own logic, but this will work for
+        simple cases.
 
         :param Image image: This is your engine's ``Image`` object. For
             PIL it's PIL.Image.
@@ -30,6 +32,8 @@ class EngineBase(object):
             '50%', '50px'.
         :keyword str colorspace: The colorspace to set/convert the image to.
             This is typically 'RGB' or 'GRAY'.
+        :returns: The thumbnailed image. The returned type depends on your
+            choice of Engine.
         """
         image = self.colorspace(image, colorspace)
         image = self.scale(image, geometry, upscale, crop)
@@ -45,8 +49,8 @@ class EngineBase(object):
             PIL it's PIL.Image.
         :param str colorspace: The colorspace to set/convert the image to.
             This is typically 'RGB' or 'GRAY'.
-        :returns: The scaled image. The returned type depends on your
-            choice of Engine.
+        :returns: The colorspace-adjusted image. The returned type depends on
+            your choice of Engine.
         """
         return self._colorspace(image, colorspace)
 
