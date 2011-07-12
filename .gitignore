@@ -4,3 +4,7 @@
 *~
 .idea
 tests/test_images/*_*x*.*
+dist
+build
+MANIFEST
+*.egg-info
