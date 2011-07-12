@@ -55,6 +55,7 @@ class EngineBase(object):
             return image
         x_image, y_image = self.get_image_size(image)
         x_offset, y_offset = parse_crop(crop, (x_image, y_image), geometry)
+        print "PCROP", parse_crop(crop, (x_image, y_image), geometry)
         return self._crop(image, geometry[0], geometry[1], x_offset, y_offset)
 
     def write(self, image, options, thumbnail):
