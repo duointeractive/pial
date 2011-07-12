@@ -52,6 +52,12 @@ def parse_crop(crop, xy_image, xy_window):
     Returns x, y offsets for cropping. The window area should fit inside
     image but it works out anyway
 
+    :param str crop: A cropping offset string. This is either one or two
+        space-separated values. If only one value is specified, the cropping
+        amount (pixels or percentage) for both X and Y dimensions is the
+        amount given. If two values are specified, X and Y dimension cropping
+        may be set independently. Some examples: '50% 50%', '50px 20px',
+        '50%', '50px'.
     :param tuple xy_image: The (x,y) dimensions of the image.
     :param tuple xy_window: The desired dimensions (x,y) of the cropped image.
     :raises: ThumbnailParseError in the event of invalid input.

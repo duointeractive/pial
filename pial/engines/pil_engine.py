@@ -42,13 +42,37 @@ class PILEngine(EngineBase):
         return image.crop((x_offset, y_offset,
                            width + x_offset, height + y_offset))
 
-    def _get_raw_data(self, image, format_, quality):
+    def _get_raw_data(self, image, format, quality):
+        """
+        Returns the raw data from the Image, which can be directly written
+        to a something, be it a file-like object or a database.
+
+        :param PIL.Image image: The image to get the raw data for.
+        :param str format: The format to save to. If this value is ``None``,
+            PIL will attempt to guess. You're almost always better off
+            providing this yourself. For a full list of formats, see the PIL
+            handbook at:
+            http://www.pythonware.com/library/pil/handbook/index.htm
+            The *Appendixes* section at the bottom, in particular.
+        :param int quality: A quality level as a percent. The lower, the
+            higher the compression, the worse the artifacts. Check the
+            format's handbook page for what the different values for this mean.
+            For example, JPEG's max quality level is 95, with 100 completely
+            disabling JPEG quantization.
+        :rtype: str
+        :returns: A string representation of the image.
+        """
         ImageFile.MAXBLOCK = 1024 * 1024
         buf = StringIO()
+
         try:
-            image.save(buf, format=format_, quality=quality, optimize=1)
+            # ptimize makes the encoder do a second pass over the image, if
+            # the format supports it.
+            image.save(buf, format=format, quality=quality, optimize=1)
         except IOError:
-            image.save(buf, format=format_, quality=quality)
+            # optimize is a no-go, omit it this attempt.
+            image.save(buf, format=format, quality=quality)
+
         raw_data = buf.getvalue()
         buf.close()
         return raw_data
