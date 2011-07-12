@@ -38,6 +38,7 @@ class EngineBase(object):
         image = self.colorspace(image, colorspace)
         image = self.scale(image, geometry, upscale, crop)
         image = self.crop(image, geometry, crop)
+
         return image
 
     def colorspace(self, image, colorspace):
@@ -56,7 +57,8 @@ class EngineBase(object):
 
     def scale(self, image, geometry, upscale, crop):
         """
-        Wrapper for ``_scale``
+        Given an image, scales the image down (or up, if ``upscale`` equates
+        to a boolean ``True``).
 
         :param Image image: This is your engine's ``Image`` object. For
             PIL it's PIL.Image.
@@ -65,13 +67,15 @@ class EngineBase(object):
             choice of Engine.
         """
         x_image, y_image = map(float, self.get_image_size(image))
-        # calculate scaling factor
+
+        # Calculate scaling factor.
         factors = (geometry[0] / x_image, geometry[1] / y_image)
         factor = max(factors) if crop else min(factors)
         if factor < 1 or upscale:
             width = toint(x_image * factor)
             height = toint(y_image * factor)
             image = self._scale(image, width, height)
+
         return image
 
     def crop(self, image, geometry, crop):
@@ -96,6 +100,7 @@ class EngineBase(object):
 
         x_image, y_image = self.get_image_size(image)
         x_offset, y_offset = parse_crop(crop, (x_image, y_image), geometry)
+
         return self._crop(image, geometry[0], geometry[1], x_offset, y_offset)
 
     def write(self, image, dest_fobj, quality=95, format=None):
@@ -132,19 +137,31 @@ class EngineBase(object):
     #
     def get_image(self, source):
         """
-        Returns the backend image objects from a ImageFile instance
+        Given a file-like object, loads it up into the Engine's choice of
+        native object and returns it.
+
+        :param file source: A file-like object to load the image from.
         """
         raise NotImplemented()
 
     def get_image_size(self, image):
         """
-        Returns the image width and height as a tuple
+        Returns the image width and height as a tuple.
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :rtype: tuple
+        :returns: Dimensions in the form of (x,y).
         """
         raise NotImplemented()
 
     def is_valid_image(self, raw_data):
         """
-        Checks if the supplied raw data is valid image data
+        Checks if the supplied raw data is valid image data.
+
+        :param str raw_data: A string representation of the image data.
+        :rtype: bool
+        :returns: ``True`` if ``raw_data`` is valid, ``False`` if not.
         """
         raise NotImplemented()
 

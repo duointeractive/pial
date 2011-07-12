@@ -1,5 +1,5 @@
 import unittest2
-from PIL import Image
+import PIL
 from pial.engines.pil_engine import PILEngine
 from tests.utils import get_test_images_path
 
@@ -11,7 +11,7 @@ class SimpleTestCase(unittest2.TestCase):
         """
         self.engine = PILEngine()
         self.trololo_path = get_test_images_path(image_filename='trololo.jpg')
-        self.trololo_image = Image.open(self.trololo_path)
+        self.trololo_image = PIL.Image.open(self.trololo_path)
 
     def tearDown(self):
         """
@@ -20,6 +20,15 @@ class SimpleTestCase(unittest2.TestCase):
         del self.engine
         del self.trololo_path
         del self.trololo_image
+
+    def test_get_image(self):
+        """
+        Tests the loading of a file-like object into an Engine's representation
+        of an Image. In this case, ``PIL.Image``.
+        """
+        trolo_fobj = open(self.trololo_path, 'rb')
+        self.assertIsInstance(self.engine.get_image(trolo_fobj),
+                              PIL.JpegImagePlugin.JpegImageFile)
 
     def test_thumb_center_crop(self):
         """

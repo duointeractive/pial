@@ -9,18 +9,41 @@ except ImportError:
 
 class PILEngine(EngineBase):
     def get_image(self, source):
+        """
+        Given a file-like object, loads it up into a PIL.Image object
+        and returns it.
+
+        :param file source: A file-like object to load the image from.
+        :rtype: PIL.Image
+        :returns: The loaded image.
+        """
         buf = StringIO(source.read())
         return Image.open(buf)
 
     def get_image_size(self, image):
+        """
+        Returns the image width and height as a tuple.
+
+        :param PIL.Image image: An image whose dimensions to get.
+        :rtype: tuple
+        :returns: Dimensions in the form of (x,y).
+        """
         return image.size
 
     def is_valid_image(self, raw_data):
+        """
+        Checks if the supplied raw data is valid image data.
+
+        :param str raw_data: A string representation of the image data.
+        :rtype: bool
+        :returns: ``True`` if ``raw_data`` is valid, ``False`` if not.
+        """
         buf = StringIO(raw_data)
         try:
             trial_image = Image.open(buf)
             trial_image.verify()
         except Exception:
+            # TODO: Get more specific with this exception handling.
             return False
         return True
 
