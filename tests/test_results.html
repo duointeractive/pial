@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>pial Test Results</title>
+
+        <style>
+            .mono {
+                font-family: monospace;
+            }
+            .shell_command {
+                margin-left: 20px;
+                font-family: monospace;
+                border: 1px dashed gray;
+                padding: 10px;
+                width: 800px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>pial Test Results</h1>
+        <p>
+            Make sure to run the full test suite, or there will be quite a few
+            broken images here. Run this from the top-level
+            <span class="mono">pial</span> directory:
+        </p>
+        <p class="shell_command">
+            PYTHONPATH=. nosetests -s tests/
+        </p>
+        <div>
+            <h2>Thumbnail @ 100x100, center cropping</h2>
+            <img src="test_images/trololo.jpg">
+            <img src="test_images/trololo_100x100.jpg">
+        </div>
+    </body>
+</html>

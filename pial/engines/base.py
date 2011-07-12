@@ -6,25 +6,33 @@ class EngineBase(object):
     """
     ABC for Thumbnail engines, methods are static
     """
-    def create(self, image, geometry, options):
+    def create_thumbnail(self, image, geometry, options, colorspace='RGB'):
         """
         Processing conductor, returns the thumbnail as an image engine instance
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param tuple geometry: Geometry of the image in the format of (x,y).
+        :keyword
         """
-        image = self.colorspace(image, geometry, options)
+        image = self.colorspace(image, colorspace)
         image = self.scale(image, geometry, options)
         image = self.crop(image, geometry, options)
         return image
 
-    def colorspace(self, image, geometry, options):
+    def colorspace(self, image, colorspace):
         """
         Wrapper for ``_colorspace``
         """
-        colorspace = options['colorspace']
         return self._colorspace(image, colorspace)
 
     def scale(self, image, geometry, options):
         """
         Wrapper for ``_scale``
+
+        :param Image image: This is your engine's ``Image`` object. For
+            PIL it's PIL.Image.
+        :param tuple geometry: Geometry of the image in the format of (x,y).
         """
         crop = options['crop']
         upscale = options['upscale']
