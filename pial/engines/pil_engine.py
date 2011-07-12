@@ -7,7 +7,7 @@ except ImportError:
     import Image, ImageFile, ImageDraw
 
 
-class Engine(EngineBase):
+class PILEngine(EngineBase):
     def get_image(self, source):
         buf = StringIO(source.read())
         return Image.open(buf)

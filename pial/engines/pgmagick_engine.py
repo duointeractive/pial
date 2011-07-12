@@ -9,7 +9,7 @@ except ImportError:
         return b64decode(blob.base64())
 
 
-class Engine(EngineBase):
+class PgmagickEngine(EngineBase):
     def get_image(self, source):
         blob = Blob()
         blob.update(source.read())

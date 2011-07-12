@@ -13,7 +13,7 @@ from tempfile import mkstemp
 size_re = re.compile(r'^(?:.+) (?:[A-Z]+) (?P<x>\d+)x(?P<y>\d+)')
 
 
-class Engine(EngineBase):
+class ConvertEngine(EngineBase):
     """
     Image object is a dict with source path, options and size
     """

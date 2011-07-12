@@ -1,11 +1,11 @@
 import unittest2
 from PIL import Image
-from pial.engines.pil_engine import Engine
+from pial.engines.pil_engine import PILEngine
 from tests.utils import get_test_images_path
 
 class SimpleTestCase(unittest2.TestCase):
     def setUp(self):
-        self.engine = Engine()
+        self.engine = PILEngine()
         self.trololo_path = get_test_images_path(image_filename='trololo.jpg')
 
     def tearDown(self):
