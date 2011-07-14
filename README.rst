@@ -25,7 +25,7 @@ Requirements
 ============
 
 * Python 2.6+
-* PIL or pgMagick or conver
+* PIL or pgMagick or convert
 
 Credit where it's due
 =====================

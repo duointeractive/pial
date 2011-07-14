@@ -48,6 +48,40 @@ class SimpleTestCase(unittest2.TestCase):
         # instance in ``thumb_img`` to the ``thumb_fobj`` file-like object.
         self.engine.write(thumb_img, thumb_fobj, format='jpeg')
 
+    def test_ccrop_image_with_weird_dimensions1(self):
+        """
+        Tests center-cropping on an image with weird dimensions.
+        """
+        cho_path = get_test_images_path(image_filename='cho.jpg')
+        cho_image = PIL.Image.open(cho_path)
+
+        thumb_img = self.engine.create_thumbnail(
+            image=cho_image,
+            geometry=(100, 100),
+            crop='center center'
+        )
+        thumb_path = get_test_images_path(
+            image_filename='cho_ccrop_100x100.jpg')
+        thumb_fobj = open(thumb_path, 'wb')
+        self.engine.write(thumb_img, thumb_fobj, format='jpeg')
+
+    def test_ccrop_image_with_weird_dimensions2(self):
+        """
+        More weird image dimension center cropping tests.
+        """
+        hol_path = get_test_images_path(image_filename='hol.jpg')
+        hol_image = PIL.Image.open(hol_path)
+
+        thumb_img = self.engine.create_thumbnail(
+            image=hol_image,
+            geometry=(100, 100),
+            crop='center center'
+        )
+        thumb_path = get_test_images_path(
+            image_filename='hol_ccrop_100x100.jpg')
+        thumb_fobj = open(thumb_path, 'wb')
+        self.engine.write(thumb_img, thumb_fobj, format='jpeg')
+
     def test_thumb_no_center_crop(self):
         """
         Tests the creation of a thumbnail without center cropping.
