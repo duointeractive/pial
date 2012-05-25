@@ -12,7 +12,7 @@ to other projects in a simple, compact form.
 Status
 ======
 
-pial is currently in a state of flex while we develop and test. Using the
+pial is currently in a state of flux while we develop and test. Using the
 PILEngine should be pretty safe, but the others are currently in need of work.
 
 Documentation
